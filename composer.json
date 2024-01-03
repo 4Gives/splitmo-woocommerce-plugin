@@ -1,0 +1,19 @@
+{
+    "name": "4gives/splitmo-woocommerce-plugin",
+    "description": "Splitmo Woocommerce Plugin",
+    "type": "project",
+    "require": {
+        "woocommerce/woocommerce": "^5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "4gives\\SplitmoWoocommercePlugin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "4Gives Developers",
+            "email": "developers@4gives.com"
+        }
+    ]
+}
