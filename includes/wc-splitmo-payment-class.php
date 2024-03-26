@@ -51,7 +51,7 @@ class Splitmo_Payment_Gateway extends WC_Payment_Gateway
      */
     private function get_api_private_key()
     {
-        return $this->get_option('splitmo_api_private_key');
+        return $this->get_option('splitmo_api_secret_key');
     }
 
     /**
