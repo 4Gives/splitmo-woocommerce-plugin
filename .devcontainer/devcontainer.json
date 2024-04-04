@@ -21,8 +21,11 @@
 		"wordpresstoolbox.wordpress-toolbox",
 		"johnbillion.vscode-wordpress-hooks"
 	],
-
+	"containerEnv": {
+		"SHELL": "/bin/bash"
+	},
 	// Sets up WordPress on container start.
-	"postCreateCommand": ".devcontainer/wp-setup.sh",
-	"remoteUser": "vscode"
+	"postCreateCommand": [".devcontainer/wp-setup.sh"],
+	"remoteUser": "vscode",
+	"containerUser": "vscode"
 }

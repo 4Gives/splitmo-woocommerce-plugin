@@ -67,6 +67,14 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN useradd -ms /bin/bash vscode \
 		&& usermod -aG www-data vscode
 
+#modify vscode user to execute as www-data
+USER root
+RUN apt-get update && apt-get install -y sudo && \ 
+    rm -rf /var/lib/apt/lists/* && \
+    echo "vscode ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo 'alias wp="sudo -u www-data wp"' >> ~/.bashrc
+
+
 WORKDIR /var/www/html
 USER www-data
 
@@ -79,5 +87,5 @@ RUN mkdir -p /var/www/html/wp-content/plugins/plugin-dev; \
 
 USER root
 RUN chown -R www-data:www-data /var/www/html/
-RUN chmod 775 -R /var/www/html/
-RUN find /var/www/html/ -type d -exec chmod 775 {} \;
+RUN chmod 1775 -R /var/www/html/
+RUN find /var/www/html/ -type d -exec chmod 1775 {} \;
