@@ -63,6 +63,11 @@ WORKDIR /tmp
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 		&& php composer-setup.php --quiet --install-dir=/usr/local/bin --filename=composer
 
+#install zip
+RUN set -ex; \
+	apt-get update; \
+	apt-get install -y zip
+
 #add vscode user
 RUN useradd -ms /bin/bash vscode \
 		&& usermod -aG www-data vscode
