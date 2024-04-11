@@ -17,6 +17,9 @@ services:
       WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
       # Change Site URL to your local dev machine ip to fix redirection issues
       SITE_URL: ${SITE_URL}
+      DEV_URL: ${DEV_URL}
+      #Set to true to wipe out and reset your wordpress install (on next container rebuild)
+      WP_RESET: ${WP_RESET}
     links:
       - db
     volumes:

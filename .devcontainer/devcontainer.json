@@ -3,7 +3,9 @@
 
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "wordpress",
-
+	"mounts": [
+		"source=.,target=/mnt/.devcontainer,type=bind,consistency=cached"
+	],
 	// Uncomment the appropriate line depending on plugin vs theme development.
 	// This should match the active volume mount in docker-compose.yml
 	"workspaceFolder": "/var/www/html/wp-content/plugins/plugin-dev",
@@ -19,7 +21,8 @@
 	"extensions": [
 		"felixfbecker.php-pack",
 		"wordpresstoolbox.wordpress-toolbox",
-		"johnbillion.vscode-wordpress-hooks"
+		"johnbillion.vscode-wordpress-hooks",
+		"DEVSENSE.phptools-vscode"
 	],
 	"containerEnv": {
 		"SHELL": "/bin/bash"
