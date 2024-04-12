@@ -15,7 +15,7 @@ class SplitmoClient {
     }
     /**
      * Creates splitmo transaction and returns false if creation failed, 
-     * returns a checkout url if successfull
+     * returns a checkout url if successful
      * 
      * @return bool|string
      */
