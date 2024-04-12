@@ -9,6 +9,9 @@ PLUGINS="woocommerce all-in-one-wp-migration"
 echo "Setting up WordPress"
 cd /var/www/html;
 
+echo "Installing Additional Plugin Dependencies";
+composer install;
+
 if $WP_RESET ; then
     echo "Resetting WP"
     wp plugin delete $PLUGINS
