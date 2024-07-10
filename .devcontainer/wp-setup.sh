@@ -61,6 +61,9 @@ if [ ! -f wp-config.php ]; then
     if [ "$WORDPRESS_DEBUG" -eq 1 ]; then
         wp config set WP_DEBUG true --raw
         wp config set WP_DEBUG_LOG true --raw
+    else
+        wp config set WP_DEBUG false --raw
+        wp config set WP_DEBUG_LOG false --raw
     fi
 
 else
