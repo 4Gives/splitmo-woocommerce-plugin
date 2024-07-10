@@ -33,7 +33,7 @@ jobs:
     - name: Get the version from the plugin file
       id: get_version
       run: |
-        version=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" path/to/your/plugin/plugin-file.php)
+        version=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" wc-splitmo-payment-gateway.php)
         echo ::set-output name=version::$version
 
     - name: Create GitHub Release
@@ -53,6 +53,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: wc-splitmo-payment-gateway.zip
+        asset_path: ./wc-splitmo-payment-gateway.zip
         asset_name: wc-splitmo-payment-gateway.zip
         asset_content_type: application/zip
