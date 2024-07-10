@@ -1,1 +1,4 @@
 /vendor/
+.env
+.devcontainer/data/plugins/*
+.build/*
