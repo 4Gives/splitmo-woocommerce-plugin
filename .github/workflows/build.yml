@@ -1,0 +1,37 @@
+name: Build and Zip Plugin
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4' # or any version you require
+        extension-csv: mbstring, zip
+
+    - name: Install Composer
+      run: sudo apt-get install composer
+
+    - name: Run build script
+      run: |
+        chmod +x build.sh
+        ./build.sh
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: wc-splitmo-payment-gateway
+        path: wc-splitmo-payment-gateway.zip
