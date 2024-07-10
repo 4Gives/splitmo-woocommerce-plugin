@@ -13,3 +13,10 @@ function get_api_urls() {
 }
 
 const SPLITMO_TRANSACTION_META = 'splitmo_transaction_reference_id';
+
+const SCHEDULE_TYPES = array(
+    'DI'=> 'Direct',
+    'WE'=> 'Weekly',
+    'MO'=> 'Monthly',
+    'BI'=> 'Bi-Weekly'
+);

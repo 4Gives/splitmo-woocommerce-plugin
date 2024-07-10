@@ -3,6 +3,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
 
+include_once 'Config.php';
+
 class SplitmoClient {
     private $client;
 
@@ -19,8 +21,13 @@ class SplitmoClient {
      * 
      * @return bool|string
      */
-    public function createTransaction($order, $repayment_term){
+    public function createTransaction($order, $schedule_type, $repayment_term){
         try{
+            $billing_state_code = $order->get_billing_state();
+            $billing_country_code = $order->get_billing_country();
+            $states = WC()->countries->get_states( $billing_country_code );
+            $billing_state_name = isset( $states[ $billing_state_code ] ) ? $states[ $billing_state_code ] : $billing_state_code;
+
             $payload = array(
                 'external_uuid' => $order->get_id(),
                 'amount' => $order->get_total(),
@@ -34,7 +41,7 @@ class SplitmoClient {
                     'full_address' => $order->get_billing_address_1() . ' ' . $order->get_billing_address_2(),
                     'city' => $order->get_billing_city(),
                     'zip_code' => $order->get_billing_postcode(),
-                    'region' => $order->get_billing_state(),
+                    'region' => $billing_state_name,
                     'country_code' => $order->get_billing_country(),
                 ),
                 'redirect_urls' => array(
@@ -43,9 +50,10 @@ class SplitmoClient {
                     'cancel_url' => $order->get_cancel_order_url(),
                 ),
                 'source' => 'PL',
+                'schedule_type' => $schedule_type,
                 'repayment_term' => $repayment_term,
                 'currency' => get_woocommerce_currency(),
-                'description' => sprintf(__('Order %s', 'woocommerce'), $order->get_id()),
+                'description' => sprintf(__('%s - Order %s', 'woocommerce'), get_bloginfo('name'), $order->get_id()),
             );
             $response = $this->client->post('transactions/', [
                 RequestOptions::JSON => $payload
@@ -90,4 +98,29 @@ class SplitmoClient {
             return null;
         }
     }
+
+    /**
+     * Gets splitmo transaction details
+     * 
+     * @return Config|null
+     */
+    public function getConfig(){
+        try{
+            $response = $this->client->get('merchants/config/');
+            $response_data = $response->getBody();
+            if ($response->getStatusCode() !== 200){
+                return null;
+            }
+            $response_data = json_decode($response_data, true);
+            return new Config($response_data);
+
+        }catch (ClientException $e){
+            wc_get_logger()->error('[getConfig]' . wc_print_r($e->getMessage(), true));
+            return null;
+        }catch (Exception $e){
+            wc_get_logger()->error('[getConfig]' . wc_print_r($e->getMessage(), true));
+            return null;
+        }
+    }
+
 }
