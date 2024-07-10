@@ -33,7 +33,7 @@ jobs:
     - name: Get the version from the plugin file
       id: get_version
       run: |
-        version=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" path/to/your/plugin/plugin-file.php)
+        version=$(grep -oP "Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" wc-splitmo-payment-gateway.php)
         echo ::set-output name=version::$version
 
     - name: Create GitHub Release
